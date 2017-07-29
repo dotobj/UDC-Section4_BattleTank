@@ -7154,6 +7154,17 @@ declare class BattleTankGameModeBase extends GameModeBase {
 	static C(Other: UObject): BattleTankGameModeBase;
 }
 
+declare class Tank extends Pawn { 
+	constructor(InWorld: World, Location?: Vector, Rotation?: Rotator);
+	static StaticClass: any;
+	static GetClassObject(): Class;
+	static GetDefaultObject(): Tank;
+	static GetDefaultSubobjectByName(Name: string): UObject;
+	static SetDefaultSubobjectClass(Name: string): void;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): Tank;
+	static C(Other: UObject): Tank;
+}
+
 declare class TankPlayerController extends PlayerController { 
 	constructor(InWorld: World, Location?: Vector, Rotation?: Rotator);
 	static StaticClass: any;
