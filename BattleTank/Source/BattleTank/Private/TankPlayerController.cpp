@@ -38,51 +38,56 @@ void ATankPlayerController::AimTowardsCrosshair()
     FVector OutHitLocation; // out param
     if (GetSightRayHitLocation(OutHitLocation))
     {
-        //UE_LOG(LogTemp, Warning, TEXT("LookDirection: %s"), *OutHitLocation.ToString());
-        // tell controlled tank to aim at this point
+        UE_LOG(LogTemp, Warning, TEXT("Hit Location: %s"), *OutHitLocation.ToString());
+        GetControlledTank()->AimAt(OutHitLocation);
     }
 }
 
 // get world location of linetrace though crosshair, true if it hits the landscape
 bool ATankPlayerController::GetSightRayHitLocation( FVector& OutHitLocation ) const
 {
-    // ray-cast out to reach distance
-    FHitResult HitResult;
-    FCollisionQueryParams TraceParams(FName(TEXT("")), false, GetOwner());
-    GetWorld()->LineTraceSingleByObjectType(
-                                            OUT HitResult,
-                                            GetTraceLineStart(),
-                                            GetTraceLineEnd(),
-                                            FCollisionObjectQueryParams(ECollisionChannel::ECC_WorldDynamic),
-                                            TraceParams
-                                            );
     // find crosshair position in pixel coordinates
     int32 ViewportSizeX, ViewportSizeY;
     GetViewportSize(ViewportSizeX, ViewportSizeY);
     auto ScreenLocation = FVector2D((ViewportSizeX*CrossHairXLocation), (ViewportSizeY*CrossHairYLocation));
     
     // de-project the screen position of the crosshair to a world direction
-    // line trace along that look direction and see what we hit
-    OutHitLocation = FVector(1.0);
+    FVector LookDirection;
+    if (GetLookDirection(ScreenLocation, LookDirection))
+    {
+        // line trace along that look direction and see what we hit
+        GetLookVectorHitLocation( LookDirection, OutHitLocation );
+    }
+    
     return true;
 }
 
-FVector ATankPlayerController::GetTraceLineStart() const
+bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const
 {
-    FVector PlayerViewPointLocation;
-    FRotator PlayerViewPointRotation;
-    GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(
-                                                               OUT PlayerViewPointLocation,
-                                                               OUT PlayerViewPointRotation);
-    return PlayerViewPointLocation;
+    FVector CameraWorldLocation; // to be discarded, but must be given
+    return DeprojectScreenPositionToWorld(
+                                    ScreenLocation.X,
+                                    ScreenLocation.Y,
+                                    CameraWorldLocation,
+                                    LookDirection);
 }
 
-FVector ATankPlayerController::GetTraceLineEnd() const
+bool ATankPlayerController::GetLookVectorHitLocation( FVector LookDirection, FVector& OutHitLocation ) const
 {
-    FVector PlayerViewPointLocation;
-    FRotator PlayerViewPointRotation;
-    GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(
-                                                               OUT PlayerViewPointLocation,
-                                                               OUT PlayerViewPointRotation);
-    return PlayerViewPointLocation + PlayerViewPointRotation.Vector() * Reach;
+    FHitResult HitResult;
+    auto StartLocation = PlayerCameraManager->GetCameraLocation();
+    auto EndLocation = StartLocation + ( LookDirection * LineTraceRange);
+    if (GetWorld()->LineTraceSingleByChannel(
+                                             HitResult,
+                                             StartLocation,
+                                             EndLocation,
+                                             ECollisionChannel::ECC_Visibility
+                                             ))
+    {
+        OutHitLocation = HitResult.Location;
+        return true;
+    }
+        OutHitLocation = FVector(0.0);
+        return false;
 }
+

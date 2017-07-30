@@ -7165,7 +7165,21 @@ declare class Tank extends Pawn {
 	static C(Other: UObject): Tank;
 }
 
+declare class TankAIController extends AIController { 
+	constructor(InWorld: World, Location?: Vector, Rotation?: Rotator);
+	static StaticClass: any;
+	static GetClassObject(): Class;
+	static GetDefaultObject(): TankAIController;
+	static GetDefaultSubobjectByName(Name: string): UObject;
+	static SetDefaultSubobjectClass(Name: string): void;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): TankAIController;
+	static C(Other: UObject): TankAIController;
+}
+
 declare class TankPlayerController extends PlayerController { 
+	Reach: number;
+	CrossHairXLocation: number;
+	CrossHairYLocation: number;
 	constructor(InWorld: World, Location?: Vector, Rotation?: Rotator);
 	static StaticClass: any;
 	static GetClassObject(): Class;
