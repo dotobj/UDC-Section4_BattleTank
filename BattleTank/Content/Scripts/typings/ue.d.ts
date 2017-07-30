@@ -7154,6 +7154,20 @@ declare class BattleTankGameModeBase extends GameModeBase {
 	static C(Other: UObject): BattleTankGameModeBase;
 }
 
+declare class TankAimingComponent extends ActorComponent { 
+	constructor();
+	constructor(Outer: UObject);
+	static Load(ResourceName: string): TankAimingComponent;
+	static Find(Outer: UObject, ResourceName: string): TankAimingComponent;
+	static StaticClass: any;
+	static GetClassObject(): Class;
+	static GetDefaultObject(): TankAimingComponent;
+	static GetDefaultSubobjectByName(Name: string): UObject;
+	static SetDefaultSubobjectClass(Name: string): void;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): TankAimingComponent;
+	static C(Other: UObject): TankAimingComponent;
+}
+
 declare class Tank extends Pawn { 
 	constructor(InWorld: World, Location?: Vector, Rotation?: Rotator);
 	static StaticClass: any;
@@ -7162,6 +7176,7 @@ declare class Tank extends Pawn {
 	static GetDefaultSubobjectByName(Name: string): UObject;
 	static SetDefaultSubobjectClass(Name: string): void;
 	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): Tank;
+	SetBarrelReference(BarrelToSet: StaticMeshComponent): void;
 	static C(Other: UObject): Tank;
 }
 
@@ -7177,7 +7192,7 @@ declare class TankAIController extends AIController {
 }
 
 declare class TankPlayerController extends PlayerController { 
-	Reach: number;
+	LineTraceRange: number;
 	CrossHairXLocation: number;
 	CrossHairYLocation: number;
 	constructor(InWorld: World, Location?: Vector, Rotation?: Rotator);
