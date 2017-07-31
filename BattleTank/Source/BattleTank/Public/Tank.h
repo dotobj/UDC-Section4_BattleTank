@@ -36,5 +36,4 @@ private:
     
     UPROPERTY(EditAnywhere, Category = Firing)
     float LaunchSpeed = 100000.f; // Find default
-
 };

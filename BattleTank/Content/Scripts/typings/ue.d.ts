@@ -7169,6 +7169,7 @@ declare class TankAimingComponent extends ActorComponent {
 }
 
 declare class Tank extends Pawn { 
+	LaunchSpeed: number;
 	constructor(InWorld: World, Location?: Vector, Rotation?: Rotator);
 	static StaticClass: any;
 	static GetClassObject(): Class;
