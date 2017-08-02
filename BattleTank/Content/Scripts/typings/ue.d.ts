@@ -7154,6 +7154,17 @@ declare class BattleTankGameModeBase extends GameModeBase {
 	static C(Other: UObject): BattleTankGameModeBase;
 }
 
+declare class Projectile extends Actor { 
+	constructor(InWorld: World, Location?: Vector, Rotation?: Rotator);
+	static StaticClass: any;
+	static GetClassObject(): Class;
+	static GetDefaultObject(): Projectile;
+	static GetDefaultSubobjectByName(Name: string): UObject;
+	static SetDefaultSubobjectClass(Name: string): void;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): Projectile;
+	static C(Other: UObject): Projectile;
+}
+
 declare class TankTurret extends StaticMeshComponent { 
 	MaxDegreesPerSecond: number;
 	constructor();
@@ -7187,7 +7198,9 @@ declare class TankBarrel extends StaticMeshComponent {
 }
 
 declare class Tank extends Pawn { 
+	ProjectileBlueprint: UnrealEngineClass;
 	LaunchSpeed: number;
+	ReloadTimeInSeconds: number;
 	constructor(InWorld: World, Location?: Vector, Rotation?: Rotator);
 	static StaticClass: any;
 	static GetClassObject(): Class;

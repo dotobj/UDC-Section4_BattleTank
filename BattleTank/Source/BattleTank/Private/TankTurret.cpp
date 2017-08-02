@@ -11,5 +11,3 @@ void UTankTurret::Turn( float RelativeSpeed )
     auto Turn = RelativeRotation.Yaw + TurnChange;
     SetRelativeRotation(FRotator (0, Turn, 0));
 }
-
-
