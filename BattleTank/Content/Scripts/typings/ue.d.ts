@@ -7239,6 +7239,20 @@ declare class TankAimingComponent extends ActorComponent {
 	static C(Other: UObject): TankAimingComponent;
 }
 
+declare class TankMovementComponent extends NavMovementComponent { 
+	constructor();
+	constructor(Outer: UObject);
+	static Load(ResourceName: string): TankMovementComponent;
+	static Find(Outer: UObject, ResourceName: string): TankMovementComponent;
+	static StaticClass: any;
+	static GetClassObject(): Class;
+	static GetDefaultObject(): TankMovementComponent;
+	static GetDefaultSubobjectByName(Name: string): UObject;
+	static SetDefaultSubobjectClass(Name: string): void;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): TankMovementComponent;
+	static C(Other: UObject): TankMovementComponent;
+}
+
 declare class TankPlayerController extends PlayerController { 
 	LineTraceRange: number;
 	CrossHairXLocation: number;
@@ -7251,6 +7265,23 @@ declare class TankPlayerController extends PlayerController {
 	static SetDefaultSubobjectClass(Name: string): void;
 	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): TankPlayerController;
 	static C(Other: UObject): TankPlayerController;
+}
+
+declare class TankTrack extends StaticMeshComponent { 
+	TrackMaxDrivingForce: number;
+	ForceLocationOffset: Vector;
+	constructor();
+	constructor(Outer: UObject);
+	static Load(ResourceName: string): TankTrack;
+	static Find(Outer: UObject, ResourceName: string): TankTrack;
+	static StaticClass: any;
+	static GetClassObject(): Class;
+	static GetDefaultObject(): TankTrack;
+	static GetDefaultSubobjectByName(Name: string): UObject;
+	static SetDefaultSubobjectClass(Name: string): void;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): TankTrack;
+	SetThrottle(Throttle: number): void;
+	static C(Other: UObject): TankTrack;
 }
 
 declare class FlipbookEditorSettings extends UObject { 

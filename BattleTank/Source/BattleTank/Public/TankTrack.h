@@ -17,5 +17,10 @@ public:
     UFUNCTION(BlueprintCallable, Category = Input)
     void SetThrottle(float Throttle);
 	
+    // max force per track in nextons
+    UPROPERTY(EditDefaultsOnly)
+    float TrackMaxDrivingForce = 400000.; // assume 40 tonne tank, and 1g acceleration
 	
+    UPROPERTY(EditDefaultsOnly)
+    FVector ForceLocationOffset = FVector(-150, 0, 0);
 };
