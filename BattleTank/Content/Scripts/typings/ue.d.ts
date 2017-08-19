@@ -7165,6 +7165,32 @@ declare class Projectile extends Actor {
 	static C(Other: UObject): Projectile;
 }
 
+declare class Tank extends Pawn { 
+	ProjectileBlueprint: UnrealEngineClass;
+	LaunchSpeed: number;
+	ReloadTimeInSeconds: number;
+	constructor(InWorld: World, Location?: Vector, Rotation?: Rotator);
+	static StaticClass: any;
+	static GetClassObject(): Class;
+	static GetDefaultObject(): Tank;
+	static GetDefaultSubobjectByName(Name: string): UObject;
+	static SetDefaultSubobjectClass(Name: string): void;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): Tank;
+	Fire(): void;
+	static C(Other: UObject): Tank;
+}
+
+declare class TankAIController extends AIController { 
+	constructor(InWorld: World, Location?: Vector, Rotation?: Rotator);
+	static StaticClass: any;
+	static GetClassObject(): Class;
+	static GetDefaultObject(): TankAIController;
+	static GetDefaultSubobjectByName(Name: string): UObject;
+	static SetDefaultSubobjectClass(Name: string): void;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): TankAIController;
+	static C(Other: UObject): TankAIController;
+}
+
 declare type EFiringState = 'Reloading' | 'Aiming' | 'Locked';
 declare var EFiringState : { Reloading:'Reloading',Aiming:'Aiming',Locked:'Locked', };
 declare class TankBarrel extends StaticMeshComponent { 
@@ -7201,6 +7227,8 @@ declare class TankTurret extends StaticMeshComponent {
 
 declare class TankAimingComponent extends ActorComponent { 
 	FiringState: EFiringState;
+	TankAimingComponent: TankAimingComponent;
+	LaunchSpeed: number;
 	constructor();
 	constructor(Outer: UObject);
 	static Load(ResourceName: string): TankAimingComponent;
@@ -7249,34 +7277,6 @@ declare class TankMovementComponent extends NavMovementComponent {
 	static C(Other: UObject): TankMovementComponent;
 }
 
-declare class Tank extends Pawn { 
-	TankAimingComponent: TankAimingComponent;
-	TankMovementComponent: TankMovementComponent;
-	ProjectileBlueprint: UnrealEngineClass;
-	LaunchSpeed: number;
-	ReloadTimeInSeconds: number;
-	constructor(InWorld: World, Location?: Vector, Rotation?: Rotator);
-	static StaticClass: any;
-	static GetClassObject(): Class;
-	static GetDefaultObject(): Tank;
-	static GetDefaultSubobjectByName(Name: string): UObject;
-	static SetDefaultSubobjectClass(Name: string): void;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): Tank;
-	Fire(): void;
-	static C(Other: UObject): Tank;
-}
-
-declare class TankAIController extends AIController { 
-	constructor(InWorld: World, Location?: Vector, Rotation?: Rotator);
-	static StaticClass: any;
-	static GetClassObject(): Class;
-	static GetDefaultObject(): TankAIController;
-	static GetDefaultSubobjectByName(Name: string): UObject;
-	static SetDefaultSubobjectClass(Name: string): void;
-	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): TankAIController;
-	static C(Other: UObject): TankAIController;
-}
-
 declare class TankPlayerController extends PlayerController { 
 	LineTraceRange: number;
 	CrossHairXLocation: number;
@@ -7288,7 +7288,7 @@ declare class TankPlayerController extends PlayerController {
 	static GetDefaultSubobjectByName(Name: string): UObject;
 	static SetDefaultSubobjectClass(Name: string): void;
 	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): TankPlayerController;
-	GetControlledTank(): Tank;
+	FoundAimingComponent(AimingCompRef: TankAimingComponent): void;
 	static C(Other: UObject): TankPlayerController;
 }
 
