@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright GradeACaffeine.
 
 #pragma once
 
@@ -15,6 +15,6 @@ public:
     void Turn( float RelativeSpeed );
     
 private:
-    UPROPERTY(EditDefaultsOnly, Category = Setup)
-    float MaxDegreesPerSecond = 35;
+    UPROPERTY(EditDefaultsOnly, Category = "Setup")
+    float MaxDegreesPerSecond = 40;
 };
