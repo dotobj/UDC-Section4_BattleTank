@@ -42,6 +42,16 @@ private:
     // Sets default values for this component's properties
     UTankAimingComponent();
     
+    virtual void BeginPlay() override;
+
+    virtual void TickComponent( float DeltaTime, enum ELevelTick, FActorComponentTickFunction *ThisTickFunction ) override;
+    
+    bool IsBarrelMoving();
+    
+    void MoveBarrelTowards( FVector AimDirection );
+    
+    FVector AimDirection;
+    
     UPROPERTY(EditDefaultsOnly, Category = "Firing")
     float LaunchSpeed = 5000.f;
     
@@ -55,6 +65,4 @@ private:
     
     UTankBarrel* Barrel = nullptr;
     UTankTurret* Turret = nullptr;
-    
-    void MoveBarrelTowards( FVector AimDirection );
 };
