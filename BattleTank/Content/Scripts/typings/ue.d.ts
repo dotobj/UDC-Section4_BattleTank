@@ -7177,6 +7177,7 @@ declare class Tank extends Pawn {
 }
 
 declare class TankAIController extends AIController { 
+	AcceptanceRadius: number;
 	constructor(InWorld: World, Location?: Vector, Rotation?: Rotator);
 	static StaticClass: any;
 	static GetClassObject(): Class;
@@ -7187,8 +7188,8 @@ declare class TankAIController extends AIController {
 	static C(Other: UObject): TankAIController;
 }
 
-declare type EFiringState = 'Reloading' | 'Aiming' | 'Locked';
-declare var EFiringState : { Reloading:'Reloading',Aiming:'Aiming',Locked:'Locked', };
+declare type EFiringState = 'Reloading' | 'Aiming' | 'Locked' | 'OutOfAmmo';
+declare var EFiringState : { Reloading:'Reloading',Aiming:'Aiming',Locked:'Locked',OutOfAmmo:'OutOfAmmo', };
 declare class TankBarrel extends StaticMeshComponent { 
 	MaxDegreesPerSecond: number;
 	MaxElevationDegrees: number;
@@ -7223,6 +7224,7 @@ declare class TankTurret extends StaticMeshComponent {
 
 declare class TankAimingComponent extends ActorComponent { 
 	FiringState: EFiringState;
+	Ammo: number;
 	LaunchSpeed: number;
 	ProjectileBlueprint: UnrealEngineClass;
 	ReloadTimeInSeconds: number;
@@ -7243,7 +7245,6 @@ declare class TankAimingComponent extends ActorComponent {
 
 declare class TankTrack extends StaticMeshComponent { 
 	TrackMaxDrivingForce: number;
-	ForceLocationOffset: Vector;
 	constructor();
 	constructor(Outer: UObject);
 	static Load(ResourceName: string): TankTrack;
@@ -7255,6 +7256,7 @@ declare class TankTrack extends StaticMeshComponent {
 	static SetDefaultSubobjectClass(Name: string): void;
 	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): TankTrack;
 	SetThrottle(Throttle: number): void;
+	OnHit(HitComponent: PrimitiveComponent,OtherActor: Actor,OtherComponent: PrimitiveComponent,NormalImpulse: Vector,Hit: HitResult): void;
 	static C(Other: UObject): TankTrack;
 }
 

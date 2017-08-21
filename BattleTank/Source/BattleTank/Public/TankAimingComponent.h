@@ -11,7 +11,8 @@ enum class EFiringState : uint8
 {
     Reloading,
     Aiming,
-    Locked
+    Locked,
+    OutOfAmmo
 };
 
 // Forward Declaration
@@ -32,11 +33,16 @@ public:
     UFUNCTION(BlueprintCallable, Category = "Firing")
     void Fire();
     
+    EFiringState GetFiringState() const;
+    
 	void AimAt( FVector OutHitLocation);
     
 protected:
     UPROPERTY(BlueprintReadOnly, Category = "State")
     EFiringState FiringState = EFiringState::Reloading;
+    
+    UPROPERTY(BlueprintReadWrite, Category = "Firing")
+    int32 Ammo = 3;
  
 private:
     // Sets default values for this component's properties
