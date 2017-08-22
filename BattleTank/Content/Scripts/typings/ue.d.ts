@@ -7155,6 +7155,8 @@ declare class BattleTankGameModeBase extends GameModeBase {
 }
 
 declare class Projectile extends Actor { 
+	CollisionMesh: StaticMeshComponent;
+	LaunchBlast: ParticleSystemComponent;
 	constructor(InWorld: World, Location?: Vector, Rotation?: Rotator);
 	static StaticClass: any;
 	static GetClassObject(): Class;
@@ -7224,10 +7226,10 @@ declare class TankTurret extends StaticMeshComponent {
 
 declare class TankAimingComponent extends ActorComponent { 
 	FiringState: EFiringState;
-	Ammo: number;
 	LaunchSpeed: number;
 	ProjectileBlueprint: UnrealEngineClass;
 	ReloadTimeInSeconds: number;
+	Ammo: number;
 	constructor();
 	constructor(Outer: UObject);
 	static Load(ResourceName: string): TankAimingComponent;
@@ -7239,6 +7241,7 @@ declare class TankAimingComponent extends ActorComponent {
 	static SetDefaultSubobjectClass(Name: string): void;
 	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): TankAimingComponent;
 	Initialise(BarrelToSet: TankBarrel,TurretToSet: TankTurret): void;
+	GetAmmo(): number;
 	Fire(): void;
 	static C(Other: UObject): TankAimingComponent;
 }

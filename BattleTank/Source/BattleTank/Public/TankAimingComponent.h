@@ -37,12 +37,12 @@ public:
     
 	void AimAt( FVector OutHitLocation);
     
+    UFUNCTION(BlueprintCallable, Category = "Firing")
+    int32 GetAmmo() const;
+    
 protected:
     UPROPERTY(BlueprintReadOnly, Category = "State")
     EFiringState FiringState = EFiringState::Reloading;
-    
-    UPROPERTY(BlueprintReadWrite, Category = "Firing")
-    int32 Ammo = 3;
  
 private:
     // Sets default values for this component's properties
@@ -66,7 +66,10 @@ private:
     
     UPROPERTY(EditDefaultsOnly, Category = "Firing")
     float ReloadTimeInSeconds = 3.;
-        
+    
+    UPROPERTY(EditDefaultsOnly, Category = "Firing")
+    int32 Ammo = 3;
+    
     double LastFireTime = 0;
     
     UTankBarrel* Barrel = nullptr;
