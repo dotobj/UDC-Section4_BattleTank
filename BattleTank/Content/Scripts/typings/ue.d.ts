@@ -7154,9 +7154,23 @@ declare class BattleTankGameModeBase extends GameModeBase {
 	static C(Other: UObject): BattleTankGameModeBase;
 }
 
+declare class PickUp extends Actor { 
+	constructor(InWorld: World, Location?: Vector, Rotation?: Rotator);
+	static StaticClass: any;
+	static GetClassObject(): Class;
+	static GetDefaultObject(): PickUp;
+	static GetDefaultSubobjectByName(Name: string): UObject;
+	static SetDefaultSubobjectClass(Name: string): void;
+	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): PickUp;
+	static C(Other: UObject): PickUp;
+}
+
 declare class Projectile extends Actor { 
 	CollisionMesh: StaticMeshComponent;
 	LaunchBlast: ParticleSystemComponent;
+	ImpactBlast: ParticleSystemComponent;
+	ExplosionForce: RadialForceComponent;
+	DestroyDelay: number;
 	constructor(InWorld: World, Location?: Vector, Rotation?: Rotator);
 	static StaticClass: any;
 	static GetClassObject(): Class;
@@ -7164,6 +7178,7 @@ declare class Projectile extends Actor {
 	static GetDefaultSubobjectByName(Name: string): UObject;
 	static SetDefaultSubobjectClass(Name: string): void;
 	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): Projectile;
+	OnHit(HitComponent: PrimitiveComponent,OtherActor: Actor,OtherComponent: PrimitiveComponent,NormalImpulse: Vector,Hit: HitResult): void;
 	static C(Other: UObject): Projectile;
 }
 

@@ -18,19 +18,30 @@ public:
 	virtual void BeginPlay() override;
     
     void LaunchProjectile( float Speed );
-
+    
 private:
-    UProjectileMovementComponent* ProjectileMovementComponent = nullptr;
-    
-    UPROPERTY(VisibleAnywhere, Category = "Setup")
-    UStaticMeshComponent* CollisionMesh = nullptr;
-    
-    UPROPERTY(VisibleAnywhere, Category = "Setup")
-    UParticleSystemComponent* LaunchBlast = nullptr;
-    
-    UPROPERTY(VisibleAnywhere, Category = "Setup")
-    UParticleSystemComponent* ImpactBlast = nullptr;
-    
     UFUNCTION()
     void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
+    
+    void OnTimerExpired();
+    
+    UProjectileMovementComponent* ProjectileMovementComponent = nullptr;
+    
+    UPROPERTY(VisibleAnywhere, Category = "Components")
+    UStaticMeshComponent* CollisionMesh = nullptr;
+    
+    UPROPERTY(VisibleAnywhere, Category = "Components")
+    UParticleSystemComponent* LaunchBlast = nullptr;
+    
+    UPROPERTY(VisibleAnywhere, Category = "Components")
+    UParticleSystemComponent* ImpactBlast = nullptr;
+    
+    UPROPERTY(VisibleAnywhere, Category = "Components")
+    URadialForceComponent* ExplosionForce = nullptr;
+    
+    UPROPERTY(EditDefaultsOnly, Category = "Setup")
+    float DestroyDelay = 10.0f;
+    
+    UPROPERTY(EditDefaultsOnly, Category = "Setup")
+    float ProjectileDamage = 20.0f;
 };
