@@ -2,12 +2,32 @@
 
 #include "BattleTank.h"
 #include "TankAimingComponent.h"
+#include "Tank.h"
 #include "TankAIController.h"
 
 void ATankAIController::BeginPlay()
 {
     Super::BeginPlay();
     auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
+}
+
+void ATankAIController::SetPawn(APawn* InPawn)
+{
+    Super::SetPawn(InPawn);
+    if (InPawn)
+    {
+        auto PossessedTank = Cast<ATank>(InPawn);
+        if (!ensure(PossessedTank)) { return; }
+        
+        // subscribe to local event 
+        PossessedTank->OnDeath.AddUniqueDynamic(this, &ATankAIController::OnTankDeath);
+    }
+}
+
+void ATankAIController::OnTankDeath()
+{
+    if (!GetPawn()) { return; }
+    GetPawn()->DetachFromControllerPendingDestroy();
 }
 
 // Called every frame

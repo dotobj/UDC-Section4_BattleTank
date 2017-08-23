@@ -6,11 +6,16 @@
 #include "TankPlayerController.generated.h" // must be the last include
 
 class UTankAimingComponent;
+class ATank;
 
 UCLASS()
 class BATTLETANK_API ATankPlayerController : public APlayerController
 {
 	GENERATED_BODY()
+    
+public:
+    UFUNCTION()
+    void OnTankDeath();
     
 protected:    
     UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
@@ -22,6 +27,8 @@ private:
     
     virtual void BeginPlay() override;
     
+    virtual void SetPawn(APawn* InPawn) override;
+
     // Start moving the barrel of the tank so that a shot would hit where the crosshair intersects the world.
     void AimTowardsCrosshair();
     

@@ -70,6 +70,9 @@ private:
     UPROPERTY(EditDefaultsOnly, Category = "Firing")
     int32 Ammo = 3;
     
+    UPROPERTY(EditDefaultsOnly, Category = "Firing")
+    float AimAccuracy = .01f;
+    
     double LastFireTime = 0;
     
     UTankBarrel* Barrel = nullptr;

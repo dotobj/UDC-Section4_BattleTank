@@ -7171,6 +7171,7 @@ declare class Projectile extends Actor {
 	ImpactBlast: ParticleSystemComponent;
 	ExplosionForce: RadialForceComponent;
 	DestroyDelay: number;
+	ProjectileDamage: number;
 	constructor(InWorld: World, Location?: Vector, Rotation?: Rotator);
 	static StaticClass: any;
 	static GetClassObject(): Class;
@@ -7183,6 +7184,8 @@ declare class Projectile extends Actor {
 }
 
 declare class Tank extends Pawn { 
+	StartingHealth: number;
+	CurrentHealth: number;
 	constructor(InWorld: World, Location?: Vector, Rotation?: Rotator);
 	static StaticClass: any;
 	static GetClassObject(): Class;
@@ -7190,6 +7193,7 @@ declare class Tank extends Pawn {
 	static GetDefaultSubobjectByName(Name: string): UObject;
 	static SetDefaultSubobjectClass(Name: string): void;
 	static CreateDefaultSubobject(Name: string, Transient?: boolean, Required?: boolean, Abstract?: boolean): Tank;
+	GetHealthPercent(): number;
 	static C(Other: UObject): Tank;
 }
 
